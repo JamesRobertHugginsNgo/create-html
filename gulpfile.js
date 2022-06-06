@@ -9,20 +9,20 @@ const gulpUglify = require('gulp-uglify');
 
 // -- BUILD NODE WITH DEBUG ----------------------------------------------------
 
-function buildNodeWithDebug() {
-	return gulp.src('./src/**/*.js', { since: gulp.lastRun(buildNodeWithDebug) })
-		.pipe(gulpPreprocess({ context: { TARGET: 'NODE', DEBUG: true } }))
-		.pipe(gulpRename((path) => path.basename += '.debug'))
-		.pipe(gulp.dest('./dist/node/'));
-}
+// function buildNodeWithDebug() {
+// 	return gulp.src('./src/**/*.js', { since: gulp.lastRun(buildNodeWithDebug) })
+// 		.pipe(gulpPreprocess({ context: { TARGET: 'NODE', DEBUG: true } }))
+// 		.pipe(gulpRename((path) => path.basename += '.debug'))
+// 		.pipe(gulp.dest('./dist/node/'));
+// }
 
 // -- BUILD NODE ---------------------------------------------------------------
 
-function buildNode() {
-	return gulp.src('./src/**/*.js', { since: gulp.lastRun(buildNode) })
-		.pipe(gulpPreprocess({ context: { TARGET: 'NODE', DEBUG: false } }))
-		.pipe(gulp.dest('./dist/node/'));
-}
+// function buildNode() {
+// 	return gulp.src('./src/**/*.js', { since: gulp.lastRun(buildNode) })
+// 		.pipe(gulpPreprocess({ context: { TARGET: 'NODE', DEBUG: false } }))
+// 		.pipe(gulp.dest('./dist/node/'));
+// }
 
 // -- BUILD BROWSER ES6 MODULE WITH DEBUG --------------------------------------
 
@@ -99,8 +99,8 @@ function cleanup() {
 }
 
 const build = gulp.parallel(
-	buildNodeWithDebug,
-	buildNode,
+	// buildNodeWithDebug,
+	// buildNode,
 	buildBrowserEs6ModuleWithDebug,
 	buildBrowserEs6Module,
 	buildBrowserEs6WithDebug,
