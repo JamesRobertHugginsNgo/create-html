@@ -4,14 +4,18 @@ A set of simple helper function functions for creating DOM objects.
 
 ## Usage
 
-The following uses `document.createDocumentFragment`.
+### Create Fragment
+
+Returns the passed value or a document fragment when passing an array. Array items with `undefined` or `null` value will be ignored.
 
 ``` JavaScript
 const fragment = createFragment(['Hello ', 'World']);
 document.body.append(fragment);
 ```
 
-The following uses `document.createElementNs`.
+### Create Element NS
+
+Returns an `Element` from a namespace, element name, attributes and children. Attributes of `undefined` or `null` will be ignored. Children of `undefined` or `null` will be ignored.
 
 ``` JavaScript
 const elementNs = createElementNs('http://www.w3.org/2000/svg', 'svg', {
@@ -32,7 +36,9 @@ const elementNs = createElementNs('http://www.w3.org/2000/svg', 'svg', {
 document.body.append(elementNs);
 ```
 
-The following uses `document.createElement`.
+### Create Element
+
+Similar to [Create Element NS](#Create-Element-NS) using XHTML namespace.
 
 ``` JavaScript
 const element = createElement('p', { class: 'test'}, [
@@ -43,13 +49,17 @@ const element = createElement('p', { class: 'test'}, [
 document.body.append(element);
 ```
 
-The following uses `element.setAttribute`.
+### Set Attributes
+
+Sets one or more attributes. Properties with `undefined` or `null` value will be ignored.
 
 ``` JavaScript
 setAttributes(element, { 'data-attribute': true });
 ```
 
-The following generates value for style element or attribute.
+### Create Style Value
+
+Returns a string formatted as style element or attribute value.
 
 ``` JavaScript
 const style = createElement('style', null, [
