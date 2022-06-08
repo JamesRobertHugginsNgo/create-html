@@ -1,25 +1,44 @@
 const CreateHtml = (() => {
-function createFragment(children) {
+function createFragment(children, callback) {
+	if (!(callback == null || typeof callback === 'function')) {
+		throw 'Argument "callback" is invalid.';
+	}
+
 	if (Array.isArray(children)) {
+		const length = children.length;
+
+		if (length === 1) {
+			return createFragment(children[0], callback);
+		}
+
 		const fragment = document.createDocumentFragment();
-		for (let index = 0, length = children.length; index < length; index++) {
+
+		for (let index = 0; index < length; index++) {
 			const child = createFragment(children[index]);
 			if (child != null) {
 				fragment.append(child);
 			}
 		}
-		return fragment;
-	} else {
-		return children;
+
+		return createFragment(fragment, callback);
 	}
+
+	if (callback != null) {
+		callback(children);
+	}
+
+	return children;
 }
 
-function setAttributes(element, attributes) {
+function setAttributes(element, attributes, callback) {
 	if (!(element instanceof Element)) {
 		throw 'Argument "element" is invalid.';
 	}
 	if (!(attributes == null || typeof attributes === 'object')) {
 		throw 'Argument "attributes" is invalid.';
+	}
+	if (!(callback == null || typeof callback === 'function')) {
+		throw 'Argument "callback" is invalid.';
 	}
 
 	if (attributes != null) {
@@ -31,10 +50,14 @@ function setAttributes(element, attributes) {
 		}
 	}
 
+	if (callback != null) {
+		callback(element);
+	}
+
 	return element;
 }
 
-function createElementNs(namespace, name, attributes, children) {
+function createElementNs(namespace, name, attributes, children, callback) {
 	if (!(typeof namespace === 'string')) {
 		throw 'Argument "namespace" is invalid.';
 	}
@@ -43,6 +66,9 @@ function createElementNs(namespace, name, attributes, children) {
 	}
 	if (!(attributes == null || typeof attributes === 'object')) {
 		throw 'Argument "attributes" is invalid.';
+	}
+	if (!(callback == null || typeof callback === 'function')) {
+		throw 'Argument "callback" is invalid.';
 	}
 
 	const element = document.createElementNS(namespace, name);
@@ -54,23 +80,33 @@ function createElementNs(namespace, name, attributes, children) {
 		element.append(fragment);
 	}
 
+	if (callback != null) {
+		callback(element);
+	}
+
 	return element;
 }
 
-function createElement(name, attributes, children) {
+function createElement(name, attributes, children, callback) {
 	if (!(typeof name === 'string')) {
 		throw 'Argument "name" is invalid.';
 	}
 	if (!(attributes == null || typeof attributes === 'object')) {
 		throw 'Argument "attributes" is invalid.';
 	}
+	if (!(callback == null || typeof callback === 'function')) {
+		throw 'Argument "callback" is invalid.';
+	}
 
-	return createElementNs('http://www.w3.org/1999/xhtml', name, attributes, children);
+	return createElementNs('http://www.w3.org/1999/xhtml', name, attributes, children, callback);
 }
 
-function createStyleValue(properties) {
+function createStyleValue(properties, callback) {
 	if (!(properties == null || typeof properties === 'object')) {
 		throw 'Argument "properties" is invalid.';
+	}
+	if (!(callback == null || typeof callback === 'function')) {
+		throw 'Argument "callback" is invalid.';
 	}
 
 	if (properties == null) {
@@ -78,6 +114,7 @@ function createStyleValue(properties) {
 	}
 
 	const styleValue = [];
+
 	for (const name in properties) {
 		const value = properties[name];
 		if (value != null) {
@@ -88,6 +125,11 @@ function createStyleValue(properties) {
 			}
 		}
 	}
+
+	if (callback != null) {
+		callback(styleValue);
+	}
+
 	return styleValue.join(' ');
 }
 

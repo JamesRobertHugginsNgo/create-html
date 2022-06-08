@@ -9,27 +9,29 @@ function createFragment(children, callback) {
 
 	/* @endif */
 	if (Array.isArray(children)) {
+		const length = children.length;
+
+		if (length === 1) {
+			return createFragment(children[0], callback);
+		}
+
 		const fragment = document.createDocumentFragment();
 
-		for (let index = 0, length = children.length; index < length; index++) {
+		for (let index = 0; index < length; index++) {
 			const child = createFragment(children[index]);
 			if (child != null) {
 				fragment.append(child);
 			}
 		}
 
-		if (callback != null) {
-			callback(fragment);
-		}
-
-		return fragment;
-	} else {
-		if (callback != null) {
-			callback(children);
-		}
-
-		return children;
+		return createFragment(fragment, callback);
 	}
+
+	if (callback != null) {
+		callback(children);
+	}
+
+	return children;
 }
 
 function setAttributes(element, attributes, callback) {
