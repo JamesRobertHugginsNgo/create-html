@@ -5,7 +5,7 @@ A set of simple helper function functions for creating DOM objects.
 ## Installation
 
 ``` console
-npm install https://github.com/JamesRobertHugginsNgo/create-html.git#1.1.0
+npm install https://github.com/JamesRobertHugginsNgo/create-html.git#1.2.0
 ```
 
 ## Usage
